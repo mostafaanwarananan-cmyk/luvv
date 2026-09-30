@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Princess Tale 5-Star Edition 👑✨</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&display=swap');
+
+    :root {
+      --primary: #f72585;
+      --secondary: #7209b7;
+      --accent: #4cc9f0;
+      --gold: #ffb703;
+      --card-bg: rgba(15, 10, 30, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
+      margin: 0; padding: 0;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #240046 0%, #10002b 100%);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .app-card {
+      width: 100vw;
+      max-width: 410px;
+      height: 100vh;
+      max-height: 760px;
+      background: var(--card-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 2px solid var(--glass-border);
+      border-radius: 36px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 15px; left: 20px; right: 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 100;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--glass-border);
+      padding: 6px 16px; border-radius: 20px;
+      font-size: 0.88rem; font-weight: 700;
+      color: #ffc6ff; text-shadow: 0 0 8px rgba(247, 37, 133, 0.5);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .stage {
+      display: none; width: 100%; height: 100%;
+      flex-direction: column; align-items: center; justify-content: space-between;
+      padding: 65px 20px 25px 20px; position: absolute; top: 0; left: 0;
+      text-align: center;
+    }
+
+    .stage.active { display: flex !important; }
+
+    h1 { font-size: 1.9rem; font-weight: 900; color: var(--primary); text-shadow: 0 0 15px rgba(247, 37, 133, 0.6); }
+    p { font-size: 0.95rem; color: #e0aaff; line-height: 1.6; }
+
+    .btn {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white; border: none; padding: 15px 36px;
+      font-size: 1.05rem; font-weight: 700; border-radius: 50px;
+      box-shadow: 0 10px 25px rgba(247, 37, 133, 0.4);
+      cursor: pointer; transition: all 0.2s ease;
+      display: inline-block; text-decoration: none;
+    }
+
+    .btn:active { transform: scale(0.95); }
+
+    canvas {
+      width: 100%; max-width: 360px; height: 470px;
+      border-radius: 28px; border: 1.5px solid var(--glass-border);
+      background: rgba(0, 0, 0, 0.25); touch-action: none;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 0 15px rgba(255, 255, 255, 0.05);
+    }
+
+    .modal {
+      display: none; position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; background: rgba(5, 0, 15, 0.88);
+      backdrop-filter: blur(15px); z-index: 200;
+      flex-direction: column; justify-content: center; align-items: center;
+      padding: 25px;
+    }
+
+    .modal-card {
+      background: rgba(30, 10, 50, 0.92);
+      border: 2px solid var(--primary);
+      border-radius: 30px; padding: 25px; max-width: 340px;
+      text-align: center; box-shadow: 0 20px 40px rgba(247, 37, 133, 0.35);
+    }
+
+    textarea, input {
+      width: 100%; background: rgba(255, 255, 255, 0.08);
+      border: 1.5px solid var(--primary); border-radius: 18px;
+      padding: 14px; color: #fff; text-align: center;
+      font-size: 0.95rem; outline: none; margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-card">
+  <div class="top-bar">
+    <div class="badge" id="stageBadge">👑 عالم جنى الملكي</div>
+    <div class="badge" id="scoreBadge">النقاط: 0</div>
+  </div>
+
+  <!-- Intro Stage -->
+  <div class="stage active" id="stage0">
+    <div style="margin-top: 35px;">
+      <div style="font-size: 75px; filter: drop-shadow(0 0 20px #f72585);">✨👸🏼✨</div>
+      <h1 style="margin-top: 15px;">حكاية أميرتي جنى</h1>
+      <p style="margin-top: 12px;">صممتلك عالم من المغامرات بجرافيكس واقعي وسلس جداً.. وفي نهاية كل مرحلة رسالة خاصة من قلبي مستنياكي 💕</p>
+    </div>
+    <button class="btn" onclick="startStage(1)">ابدأي التجربة الملكية 🚀</button>
+  </div>
+
+  <!-- Game Stage Container -->
+  <div class="stage" id="gameStage">
+    <canvas id="mainCanvas" width="360" height="470"></canvas>
+  </div>
+
+  <!-- Secret Stage -->
+  <div class="stage" id="stageSecret">
+    <div>
+      <div style="font-size: 60px;">🔒🔑</div>
+      <h2>القفل السرّي للخزنة</h2>
+      <p style="margin-top: 8px;">ادخلي تاريخ بداية حكايتنا المميزة مع بعض 💖</p>
+      <input type="text" id="secretKey" placeholder="التاريخ (مثال: 3/4/2026)">
+      <p id="secretErr" style="color: #ff477e; display: none; font-size: 0.85rem;">التاريخ مش مظبوط يا روحي! فكري تاني 🙈</p>
+    </div>
+    <button class="btn" onclick="checkSecretKey()">افتحي الخزنة ✨</button>
+  </div>
+
+  <!-- Final Love Message Stage -->
+  <div class="stage" id="stageFinal">
+    <div style="width: 100%;">
+      <div style="font-size: 55px;">💌👑</div>
+      <h2>رسالة من مصطفى لقلبك</h2>
+      <p style="margin: 12px 0; font-size: 0.92rem; color: #ffe5ec; max-height: 210px; overflow-y: auto; text-align: justify; background: rgba(255,255,255,0.06); padding: 14px; border-radius: 18px; line-height: 1.6;">
+        يا أجمل نعمة ربنا رزقني بيها في حياتي.. بحبك وبحب كل تفصيلة فيكي، بحب ضحكتك اللي بتنور دنيتي وبحب وجودك اللي بيديني أمان وراحة بال مش عند حد في العالم كله. اللعبة دي معمولة بكل حب عشان ترسم ابتسامة على وشك الحلو اللي عندي بالدنيا كلها 💕
+      </p>
+      <textarea id="replyMsg" rows="3" placeholder="اكتبيلي ردك ورسالتك هنا يا روح قلبي..."></textarea>
+    </div>
+    <button class="btn" onclick="alert('خدتي لقطة الشاشة للرد؟ أبعتيهالي فوراً 📸💖')">إرسال لـ مصطفى 📸</button>
+  </div>
+
+  <!-- Love Popup Modal -->
+  <div class="modal" id="loveModal">
+    <div class="modal-card">
+      <div style="font-size: 50px;" id="mIcon">💖</div>
+      <h2 id="mTitle" style="font-size: 1.25rem; margin: 10px 0; color: #ff85a1;"></h2>
+      <p id="mText" style="font-size: 0.9rem; color: #e0aaff; margin-bottom: 18px; text-align: right; line-height: 1.6;"></p>
+      <button class="btn" onclick="closeModalAndContinue()">المرحلة التالية ✨</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentStage = 0;
+  let canvas = document.getElementById('mainCanvas');
+  let ctx = canvas.getContext('2d');
+  let animId = null;
+  let score = 0;
+
+  const messages = {
+    1: { title: "أشطر كتكوتة في الكون! 🐣☁️", text: "مهما طارت الكتكوتة دي لأعلى سحاب، هي مش هتوصل لربع مكانتك العالية جوه قلبي.. بحبك اوي يا جنى ويا بختي بيكي ينور عيني 💕" },
+    2: { title: "وصلتي ليوجين بالسلامة! 💇🏼‍♀️🏰", text: "شعر روبانزل وصل الحبيب.. وزي ما يوجين اتحمل كل حاجة عشان يوصل لروبانزل، أنا هفضل جمبك ومعاكي وسند ليكي طوال العمر 💜" },
+    3: { title: "وصلت موانا لجزيرتها السحرية! ⛵🌺", text: "الأمان والسلام اللي موانا لقيته في جزيرتها، أنا بلاقيه بالظبط في حضنك ووجودك معايا.. بالهنا والشفا على قلبك حلاوة الفوز 💖" },
+    4: { title: "اكتملت مجرة الحب بلمستك! 🌌✨", text: "النجوم رسمت قلب باسمك في السماء.. أنتي النجمة اللي بتنورلي نفق عمري كله، وبحبك بكل لغات العالم 💕" }
+  };
+
+  function updateHeader(title, sc) {
+    document.getElementById('stageBadge').innerText = title;
+    document.getElementById('scoreBadge').innerText = "النقاط: " + sc;
+  }
+
+  function startStage(stg) {
+    currentStage = stg;
+    document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+    
+    if (stg <= 4) {
+      document.getElementById('gameStage').classList.add('active');
+      if (animId) cancelAnimationFrame(animId);
+      if (stg === 1) initChickGame();
+      if (stg === 2) initRapunzelGame();
+      if (stg === 3) initMoanaGame();
+      if (stg === 4) initGalaxyGame();
+    } else if (stg === 5) {
+      document.getElementById('stageSecret').classList.add('active');
+    }
+  }
+
+  function showModal(stgKey) {
+    document.getElementById('mIcon').innerText = stgKey === 1 ? '🐣' : stgKey === 2 ? '💇🏼‍♀️' : stgKey === 3 ? '🌺' : '🌌';
+    document.getElementById('mTitle').innerText = messages[stgKey].title;
+    document.getElementById('mText').innerText = messages[stgKey].text;
+    document.getElementById('loveModal').style.display = 'flex';
+  }
+
+  function closeModalAndContinue() {
+    document.getElementById('loveModal').style.display = 'none';
+    startStage(currentStage + 1);
+  }
+
+  /* -------------------------------------------------------------
+     STAGE 1: Realistic Chick Cloud Jump (60 FPS & HD Physics) 🐣☁️
+  ------------------------------------------------------------- */
+  function initChickGame() {
+    updateHeader("المرحلة 1: الكتكوت السحابي 🐣", 0);
+    score = 0;
+    let chick = { x: 180, y: 220, vy: 0, targetX: 180 };
+    let clouds = [];
+    let particles = [];
+
+    for (let i = 0; i < 7; i++) {
+      clouds.push({ x: Math.random() * 250, y: 440 - i * 75, w: 100, h: 20, bounce: 0 });
+    }
+
+    function handleInput(pos) { chick.targetX = pos; }
+    canvas.ontouchmove = (e) => {
+      let rect = canvas.getBoundingClientRect();
+      handleInput((e.touches[0].clientX - rect.left) * (canvas.width / rect.width));
+    };
+    canvas.onmousemove = (e) => {
+      let rect = canvas.getBoundingClientRect();
+      handleInput((e.clientX - rect.left) * (canvas.width / rect.width));
+    };
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Gradient Sky Background
+      let skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      skyGrad.addColorStop(0, '#0d1b2a'); skyGrad.addColorStop(1, '#415a77');
+      ctx.fillStyle = skyGrad; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Smooth Movement Physics
+      chick.x += (chick.targetX - chick.x) * 0.25;
+      chick.vy += 0.38;
+      chick.y += chick.vy;
+
+      // Camera Follow
+      if (chick.y < 220) {
+        let diff = 220 - chick.y;
+        chick.y = 220;
+        score += Math.floor(diff);
+        updateHeader("المرحلة 1: الكتكوت السحابي 🐣", score);
+        clouds.forEach(c => {
+          c.y += diff;
+          if (c.y > canvas.height) {
+            c.y = -20; c.x = Math.random() * 250;
+          }
+        });
+      }
+
+      // Draw Clouds with 3D Bounce Effect
+      clouds.forEach(c => {
+        if (c.bounce > 0) c.bounce -= 0.5;
+        let grad = ctx.createLinearGradient(c.x, c.y, c.x, c.y + c.h);
+        grad.addColorStop(0, '#ffb3c1'); grad.addColorStop(1, '#ff7597');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.roundRect(c.x, c.y + c.bounce, c.w, c.h, 12);
+        ctx.fill();
+
+        // Collision Check
+        if (chick.vy > 0 && chick.x > c.x && chick.x < c.x + c.w && chick.y + 15 >= c.y && chick.y + 15 <= c.y + c.h) {
+          chick.vy = -11.5;
+          c.bounce = 8;
+          // Spawn Feather Particles
+          for (let p = 0; p < 5; p++) {
+            particles.push({ x: chick.x, y: chick.y, vx: (Math.random() - 0.5) * 4, vy: -Math.random() * 3, life: 1 });
+          }
+        }
+      });
+
+      // Render Particles
+      particles.forEach((p, idx) => {
+        p.x += p.vx; p.y += p.vy; p.life -= 0.04;
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.life})`;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); ctx.fill();
+        if (p.life <= 0) particles.splice(idx, 1);
+      });
+
+      // Reset if Fallen
+      if (chick.y > canvas.height) {
+        chick.y = 220; chick.vy = -10;
+      }
+
+      // Draw Chick Character
+      ctx.font = "36px sans-serif";
+      ctx.fillText("🐣", chick.x - 18, chick.y + 12);
+
+      if (score >= 1200) { showModal(1); return; }
+      animId = requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  /* -------------------------------------------------------------
+     STAGE 2: Rapunzel's Tower & Eugene's Climb 💇🏼‍♀️🏰
+  ------------------------------------------------------------- */
+  function initRapunzelGame() {
+    updateHeader("المرحلة 2: برج روبانزل 💇🏼‍♀️", 0);
+    score = 0;
+    let hairX = 180, targetHairX = 180;
+    let eugene = { y: 400, speed: 1.3 };
+    let birds = [];
+
+    function handleInput(pos) { targetHairX = pos; }
+    canvas.ontouchmove = (e) => {
+      let rect = canvas.getBoundingClientRect();
+      handleInput((e.touches[0].clientX - rect.left) * (canvas.width / rect.width));
+    };
+    canvas.onmousemove = (e) => {
+      let rect = canvas.getBoundingClientRect();
+      handleInput((e.clientX - rect.left) * (canvas.width / rect.width));
+    };
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Night Sky Gradient
+      let bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      bgGrad.addColorStop(0, '#10002b'); bgGrad.addColorStop(1, '#3c096c');
+      ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Detailed Stone Tower Background
+      ctx.fillStyle = '#2b1e3a'; ctx.fillRect(135, 0, 90, canvas.height);
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)'; ctx.lineWidth = 2;
+      for (let y = 0; y < canvas.height; y += 30) {
+        ctx.beginPath(); ctx.moveTo(135, y); ctx.lineTo(225, y); ctx.stroke();
+      }
+
+      // Smooth Hair Physics Curve
+      hairX += (targetHairX - hairX) * 0.2;
+      ctx.strokeStyle = "#ffe5ec"; ctx.lineWidth = 8; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(180, 80);
+      ctx.bezierCurveTo(180, 150, hairX, (80 + eugene.y) / 2, hairX, eugene.y);
+      ctx.stroke();
+
+      // Characters
+      ctx.font = "42px sans-serif"; ctx.fillText("🏰", 155, 60); ctx.fillText("👸🏼", 160, 90);
+      eugene.y -= eugene.speed;
+      ctx.font = "32px sans-serif"; ctx.fillText("🕺🏻", hairX - 16, eugene.y);
+
+      // Obstacles
+      if (Math.random() < 0.035) {
+        birds.push({ x: Math.random() > 0.5 ? 0 : canvas.width, y: Math.random() * 260 + 100, vx: Math.random() * 2 + 1.5 });
+      }
+
+      for (let i = birds.length - 1; i >= 0; i--) {
+        let b = birds[i]; b.x += b.vx;
+        ctx.fillText("🦅", b.x, b.y);
+        if (Math.abs(b.x - hairX) < 25 && Math.abs(b.y - eugene.y) < 25) {
+          eugene.y = Math.min(canvas.height - 40, eugene.y + 35);
+        }
+      }
+
+      score = Math.floor((400 - eugene.y) / 3);
+      updateHeader("المرحلة 2: برج روبانزل 💇🏼‍♀️", score);
+
+      if (eugene.y <= 95) {
+        // Fireworks Celebration
+        ctx.font = "35px sans-serif"; ctx.fillText("🎆✨💖✨🎆", 85, 130);
+        setTimeout(() => showModal(2), 1000);
+        return;
+      }
+      animId = requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  /* -------------------------------------------------------------
+     STAGE 3: Moana's Ocean Quest ⛵🌺
+  ------------------------------------------------------------- */
+  function initMoanaGame() {
+    updateHeader("المرحلة 3: قارب موانا ⛵", 0);
+    score = 0;
+    let boat = { x: 180, targetX: 180, y: 390 };
+    let obstacles = [];
+    let progress = 0;
+    let waveOffset = 0;
+
+    function handleInput(pos) { boat.targetX = pos; }
+    canvas.ontouchmove = (e) => {
+      let rect = canvas.getBoundingClientRect();
+      handleInput((e.touches[0].clientX - rect.left) * (canvas.width / rect.width));
+    };
+    canvas.onmousemove = (e) => {
+      let rect = canvas.getBoundingClientRect();
+      handleInput((e.clientX - rect.left) * (canvas.width / rect.width));
+    };
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Dynamic Ocean Waves Background
+      let seaGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      seaGrad.addColorStop(0, '#0077b6'); seaGrad.addColorStop(1, '#03045e');
+      ctx.fillStyle = seaGrad; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      waveOffset += 0.05;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.beginPath();
+      for (let x = 0; x <= canvas.width; x += 20) {
+        let y = Math.sin(x * 0.03 + waveOffset) * 8 + 200;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(canvas.width, canvas.height); ctx.lineTo(0, canvas.height); ctx.fill();
+
+      // Boat Physics
+      boat.x += (boat.targetX - boat.x) * 0.25;
+      progress += 0.6;
+      score = Math.floor(progress);
+      updateHeader("المرحلة 3: قارب موانا ⛵", score);
+
+      // Te Fiti Island Destination
+      if (progress > 180) {
+        ctx.fillStyle = '#2a9d8f';
+        ctx.beginPath(); ctx.arc(180, -120 + (progress - 180), 200, 0, Math.PI * 2); ctx.fill();
+        ctx.font = "42px sans-serif"; ctx.fillText("🌺🏝️🌺", 125, -25 + (progress - 180));
+      }
+
+      // Spawn Heart & Rocks
+      if (Math.random() < 0.045 && progress < 180) {
+        obstacles.push({ x: Math.random() * 300, y: -20, type: Math.random() > 0.3 ? '🪨' : '💚' });
+      }
+
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        let ob = obstacles[i]; ob.y += 3.5;
+        ctx.font = "28px sans-serif"; ctx.fillText(ob.type, ob.x, ob.y);
+
+        if (Math.abs(ob.x - boat.x) < 32 && Math.abs(ob.y - boat.y) < 32) {
+          if (ob.type === '💚') score += 50;
+          obstacles.splice(i, 1);
+        }
+      }
+
+      // Render Boat
+      ctx.font = "40px sans-serif"; ctx.fillText("⛵", boat.x - 20, boat.y);
+
+      if (progress >= 300) { showModal(3); return; }
+      animId = requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  /* -------------------------------------------------------------
+     STAGE 4: Constellation Galaxy 🌌✨
+  ------------------------------------------------------------- */
+  function initGalaxyGame() {
+    updateHeader("المرحلة 4: مجرة القلوب 🌌", 100);
+    let stars = [
+      { x: 180, y: 130, connected: false },
+      { x: 100, y: 190, connected: false },
+      { x: 260, y: 190, connected: false },
+      { x: 130, y: 290, connected: false },
+      { x: 230, y: 290, connected: false },
+      { x: 180, y: 360, connected: false }
+    ];
+
+    function handleTouch(e) {
+      let rect = canvas.getBoundingClientRect();
+      let touchX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      let touchY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+      let px = touchX * (canvas.width / rect.width);
+      let py = touchY * (canvas.height / rect.height);
+
+      stars.forEach(s => {
+        if (Math.hypot(s.x - px, s.y - py) < 35) s.connected = true;
+      });
+    }
+    canvas.ontouchstart = handleTouch;
+    canvas.onclick = handleTouch;
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Deep Space Nebula Background
+      let spaceGrad = ctx.createRadialGradient(180, 235, 10, 180, 235, 250);
+      spaceGrad.addColorStop(0, '#3c096c'); spaceGrad.addColorStop(1, '#03071e');
+      ctx.fillStyle = spaceGrad; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Glowing Neon Laser Lines
+      ctx.strokeStyle = "#f72585"; ctx.lineWidth = 4;
+      ctx.shadowColor = "#f72585"; ctx.shadowBlur = 15;
+      ctx.beginPath();
+      let allConnected = true;
+      stars.forEach((s, idx) => {
+        if (!s.connected) allConnected = false;
+        if (idx === 0) ctx.moveTo(s.x, s.y);
+        else ctx.lineTo(s.x, s.y);
+      });
+      ctx.closePath(); ctx.stroke();
+      ctx.shadowBlur = 0; // Reset Shadow
+
+      // Render Interactive Stars
+      stars.forEach(s => {
+        ctx.font = "26px sans-serif";
+        ctx.fillText(s.connected ? "💖" : "🌟", s.x - 13, s.y + 9);
+      });
+
+      if (allConnected) {
+        ctx.font = "22px 'Tajawal', sans-serif"; ctx.fillStyle = "#ffb703";
+        ctx.fillText("✨ مجرة حب مصطفى وجنى ✨", 65, 430);
+        setTimeout(() => showModal(4), 1200);
+        return;
+      }
+      animId = requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  /*
